@@ -1,0 +1,40 @@
+- name: create ext volume for data
+  file: state=directory path={{ ext_mysql_data_volume }}
+
+- name: create ext volume for tmp
+  file: state=directory path={{ ext_mysql_tmp_volume }} mode=1777
+
+- name: create ext volume for /var/run
+  file: state=directory path={{ ext_mysql_varrun_volume }} mode=1777
+
+- name: start a Docker container
+  docker_container:
+    name: mysql
+    image: mysql:{{ docker_mysql_tag }}
+    state: started
+    recreate: yes
+    restart_policy: always
+    read_only: yes
+    exposed_ports:
+      - 3306
+    ports:
+      - "3306:3306"
+    volumes:
+      - "{{ ext_mysql_data_volume }}:/var/lib/mysql"
+      - "{{ ext_mysql_tmp_volume }}:/tmp"
+      - "{{ ext_mysql_varrun_volume }}:/run/mysqld"
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ docker_mysql_root_password }}"
+      MYSQL_DATABASE: "{{ docker_mysql_database }}"
+      MYSQL_USER: "{{ docker_mysql_user }}"
+      MYSQL_PASSWORD: "{{ docker_mysql_password }}"
+
+- name: install MySQL client
+  apt: name=mariadb-client-10.1
+
+- name: try to connect to MySQL
+  command: mysqlshow -h 127.0.0.1 -u {{ docker_mysql_user }} -p{{ docker_mysql_password }} {{ docker_mysql_database }}
+  retries: 10
+  delay: 10
+  register: result
+  until: result.rc == 0

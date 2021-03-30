@@ -1,7 +1,0 @@
-- name: launch msql-server container
-  docker_container:
-    name: db
-    image: microsoft/mssql-server
-    state: started
-    ports:
-     - "1433:1433"
