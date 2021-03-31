@@ -3,5 +3,6 @@ ext_mysql_data_volume: /var/lib/docker-extvols/mysql/data
 ext_mysql_tmp_volume: /var/lib/docker-extvols/mysql/tmp
 ext_mysql_varrun_volume: /var/lib/docker-extvols/mysql/varrun
 docker_mysql_root_password: "1234567"
+docker_mysql_database: "mysql"
 docker_mysql_user: "mysql"
 docker_mysql_password: "1234567"
