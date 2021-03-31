@@ -41,8 +41,8 @@
 #   register: mysql
 
 - name: wait for mysql container
-  retries: 5
-  delay: 5
+  # retries: 5
+  # delay: 5
   # shell: docker exec -it  mysql sh -c 'mysql --user=mysql --password=1234567 -e "SHOW DATABASES;"' > /tmp/prueba2.txt
   shell: docker exec -it  mysql sh -c 'mysql --user=mysql -p mysql --password=1234567 < /prueba/cuadromandosBD_2021-03-31.sql'
   register: mysql
