@@ -30,7 +30,7 @@
       MYSQL_PASSWORD: "{{ docker_mysql_password }}"
 
 - name: install MySQL client
-  apt: name=mariadb-client-10.1
+  yum: name=mariadb-client-10.1
 
 - name: try to connect to MySQL
   command: mysqlshow -h 127.0.0.1 -u {{ docker_mysql_user }} -p{{ docker_mysql_password }} {{ docker_mysql_database }}
