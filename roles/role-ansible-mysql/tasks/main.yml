@@ -34,4 +34,4 @@
   args:
     login_user: mysql
     login_password: "1234567"
-  register: db_created
+  register: mysql
