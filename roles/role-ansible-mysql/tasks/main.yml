@@ -23,7 +23,7 @@
       - "{{ ext_mysql_data_volume }}:/var/lib/mysql"
       - "{{ ext_mysql_tmp_volume }}:/tmp"
       - "{{ ext_mysql_varrun_volume }}:/run/mysqld"
-      - "/tmp:/tmp"
+      - "/tmp/prueba:/prueba"
     env:
       MYSQL_ROOT_PASSWORD: "{{ docker_mysql_root_password }}"
       MYSQL_DATABASE: "{{ docker_mysql_database }}"
@@ -44,6 +44,6 @@
   retries: 5
   delay: 5
   # shell: docker exec -it  mysql sh -c 'mysql --user=mysql --password=1234567 -e "SHOW DATABASES;"' > /tmp/prueba2.txt
-  shell: docker exec -it  mysql sh -c 'mysql --user=mysql --password=1234567 -e "use mysql;" < /tmp/database.sql'
+  shell: docker exec -it  mysql sh -c 'mysql --user=mysql --password=1234567 -e "use mysql;" < /prueba/database.sql'
   register: mysql
   until: mysql.rc == 0
