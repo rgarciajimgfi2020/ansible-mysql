@@ -28,13 +28,3 @@
       MYSQL_DATABASE: "{{ docker_mysql_database }}"
       MYSQL_USER: "{{ docker_mysql_user }}"
       MYSQL_PASSWORD: "{{ docker_mysql_password }}"
-
-- name: install MySQL client
-  yum: name=MariaDB-10.3.14
-
-- name: try to connect to MySQL
-  command: mysqlshow -h 127.0.0.1 -u {{ docker_mysql_user }} -p{{ docker_mysql_password }} {{ docker_mysql_database }}
-  retries: 10
-  delay: 10
-  register: result
-  until: result.rc == 0
