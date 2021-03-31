@@ -28,3 +28,10 @@
       MYSQL_DATABASE: "{{ docker_mysql_database }}"
       MYSQL_USER: "{{ docker_mysql_user }}"
       MYSQL_PASSWORD: "{{ docker_mysql_password }}"
+
+- name: "Setup database"
+  mysql_db: name=mysql state=present target=/tmp/database.sql
+  args:
+    login_user: mysql
+    login_password: "1234567"
+  register: db_created
