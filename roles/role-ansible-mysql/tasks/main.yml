@@ -29,12 +29,19 @@
       MYSQL_USER: "{{ docker_mysql_user }}"
       MYSQL_PASSWORD: "{{ docker_mysql_password }}"
 
-- name: "Setup database"
-  mysql_db: 
-    state: import 
-    name: mysql 
-    target: /tmp/database.sql
-  args:
-    login_user: mysql
-    login_password: "1234567"
+# - name: "Setup database"
+#   mysql_db: 
+#     state: import 
+#     name: mysql 
+#     target: /tmp/database.sql
+#   args:
+#     login_user: mysql
+#     login_password: "1234567"
+#   register: mysql
+
+- name: wait for mysql container
+  retries: 5
+  delay: 5
+  shell: docker exec -t  mysql sh -c "mysql --user=mysql --password=1234567 -e "SHOW DATABASES;" | grep -c database"
   register: mysql
+  until: mysql.rc == 0
