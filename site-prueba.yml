@@ -9,8 +9,8 @@
     docker_container:
       name: db
       image: docker.io/library/mysql:5.7
-      volumes:
-        - "{{ db_volume }}:/var/lib/mysql"
+      # volumes:
+      #   - "{{ db_volume }}:/var/lib/mysql"
       restart: true
       env:
         MYSQL_ROOT_PASSWORD: password
